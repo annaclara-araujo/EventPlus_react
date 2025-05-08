@@ -1,34 +1,42 @@
-import Imagem from "../../assests/img/cadastrousuario.png"
-import Cadastro from "../../components/cadastro/Cadastro";
-import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
+import Footer from "../../components/footer/Footer";
 import Lista from "../../components/lista/Lista";
+import Cadastro from "../../components/cadastro/Cadastro";
+import Img from "../../assests/img/cadastrotipoevento.png"
 
-const CadastroTipoUsuario = () => {
-    return (
+
+const CadastroTipoEvento = () =>{
+    return(
         <>
             <Header/>
             <main>
                 <Cadastro
-                tituloCadastro="Cadastro Tipo De Usuarios"
+                tituloCadastro="Cadastro Tipo De Eventos"
                 visibilidade="none"
                 NomeBotao="Cadastrar"
-                img_banner={Imagem}
+                img_banner={Img}
                 campoPlaceholder="Titulo"
                 />
 
                 <Lista
-                listatitulo = "Lista Tipo De Usuario"
+    
+                listatitulo = "Lista Tipo De Eventos"
                 titulocoluna = "Titulo"
                 titulo = "Tipo Evento"
-                titulo1 = "Tipo Usuario"
+                titulo1 = "Titulo Evento"
                 />
+            
+        
 
             </main>
 
+
+
+
+
             <Footer/>
-        </>
+       </> 
     )
 }
 
-export default CadastroTipoUsuario;
+export default CadastroTipoEvento;

@@ -1,18 +1,36 @@
-import Footer from "../../components/footer/Footer"
+import Footer from "../../components/footer/Footer";
 import Header from "../../components/header/Header";
-import Cadastro from "../../components/cadastro/Cadastro"
+import Cadastro from "../../components/cadastro/Cadastro";
+import Lista from "../../components/lista/Lista";
+import Banner from "../../assests/img/cadastroevento.png";
 
-import Banner from "../../assents/img/banner_cadastroEvento.png"
 const CadastroEvento = () => {
     return (
         <>
             <Header/>
-                <Cadastro
-                tituloCadastro = "Cadastro Evento"
-                img_banner = {Banner}
-                nomes = "Nome"
-                
+
+            <main>
+
+            <Cadastro
+                tituloCadastro="Cadastro Evento"
+                NomeBotao="Cadastrar"
+                img_banner={Banner}
+                campoPlaceholder="Nome"
                 />
+
+            <Lista
+    
+                listatitulo = "Lista Eventos"
+                titulocoluna = "Nome"
+                titulocoluna2 = "Tipo Evento"
+                titulo1 = "Nome do Evento"
+                titulo2 = "Tipo do Evento"
+                />
+
+            </main>
+
+
+
             <Footer/>
         </>
     )

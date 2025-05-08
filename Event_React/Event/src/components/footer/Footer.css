@@ -1,6 +1,10 @@
-Footer{
-    height: 30px;
+footer{
+    background-color: white;
+    color:black;
+
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+
+    height: 40px;
 }

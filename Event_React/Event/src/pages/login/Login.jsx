@@ -1,7 +1,6 @@
 import "./Login.css";
-import Logo from "../../assets/img/logo.svg";
+import Logo from "../../assests/img/logo.svg";
 import Botao from "../../components/botao/Botao";
-
 
 
 const Login = () => {

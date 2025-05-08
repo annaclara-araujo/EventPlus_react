@@ -1,7 +1,7 @@
 
 import "./Header.css"
-import Logo from "../../assets/img/logo.svg";
-import Adm from "../../assets/img/simboloAdm.png"
+import Logo from "../../assests/img/logo.svg";
+import Adm from "../../assests/img/simboloAdm.png"
 
 
 

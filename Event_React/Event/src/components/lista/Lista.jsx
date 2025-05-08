@@ -1,46 +1,36 @@
 
-import "./Lista.css";
-import Editar from "../../assets/img/Editar.png";
-import Excluir from "../../assets/img/Excluir.png";
 
+import "./Lista.css"
+import Editar from "../../assests/img/Editar.png"
+import Excluir from "../../assests/img/Excluir.png"
 
 const Lista = (props) => {
-    return(
-        <>
-        <section className="lista">
-            <h1>{`Lista de ${props.tituloLista}`}</h1>
-            <hr/>
+    return (
+        <section className="listagem">
+            <h1>{props.listatitulo}</h1>
+            <hr />
 
-            <div className="tabela layout_grid">
-            <table>
-                {/*Cabecalho da tabela */}
+            <div className="tabela">
                 <thead>
-                    {/* tr => Table row */}
                     <tr className="table_cabecalho">
-                        <th>{props.titulo}</th>
-                        <th style={{display:props.visible}}>Tipo Evento</th>
+                        <th>{props.titulocoluna}</th>
+                        <th>{props.titulocoluna2}</th>
                         <th>Editar</th>
                         <th>Excluir</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {/* tbody =>corpo da tabela */}
-                    <tr className="item_lista" >
-                        <td data-cell={props.titulo}>---------</td>
-                        <td data-cell="Genero" style={{display:props.visible}}>Comedia</td>
-                        <td data-cell="Editar"><img src={Editar} alt="Lapis"/></td>
-                        <td data-cell="Excluir"><img src={Excluir} alt="Lixeira"/></td> 
-                        
+                    <tr className="item_lista">
+                        <td>{props.titulo1}</td>
+                        <td>{props.titulo2}</td>
+                        <td data-cell="Editar"><img src={Editar} alt="Imagem de uma caneta" /></td>
+                        <td data-cell="Excluir"><img src={Excluir} alt="Lixeira" /></td>
                     </tr>
                 </tbody>
-            </table>
-        </div>
-
-
-
-        </section> 
-        </>
+            </div>
+        </section>
     )
 }
 
 export default Lista;
+
