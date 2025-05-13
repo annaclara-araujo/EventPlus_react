@@ -1,71 +1,67 @@
 .section_cadastro {
     background-color: #ffffff;
     color: rgb(0, 0, 0);
-    padding: 50px 0 100px 0;
+    padding: 50px 0;
 }
 
 .form_cadastro {
     display: flex;
 
-    justify-content: space-around;
+    justify-content: column;
     align-items: center;
-    height: 400px;
 }
 
-.Titulo_cadastro h1 {
+.form_cadastro h1 {
     text-transform: uppercase;
-    text-align: center
+    font-size: medium;
 }
 
-.Titulo_cadastro hr {
-    width: 200px;
-    margin: 0 auto;
-    margin-top: 10px;
-    max-width: 360px;
+.form_cadastro hr {
+    max-width: 100px;
+    width: 100%;
     border-style: solid;
-    border-width: 1, 5px;
-    border-radius: 10px;
+    margin: 0 auto;
+    border-width: 1px;
     border-color: #73061b;
+    margin-top: 5px;
 }
 
 .campos_cadastro {
-    margin-top: 20px;
-    align-items: flex-end;
+    display: flex;
+    align-items: center;
     padding-top: 60px;
     gap: 30px;
 
 }
 
-.campos_cadastro input {
-    margin-bottom: 30px;
-}
-
-.campo_cad_tipoEvento select {
-    margin-bottom: 70px;
-    width: 324px;
-    border-top: none;
-    border-left: none;
-    border-right: none;
+.campos_cad_nome input, 
+.campo_cad_tipoEvento {
+    border-radius: 6px;
     outline: none;
+    padding: 0px 5px;
+    width: 300px;
+    height: 30px;
+    margin-top: 7px;
+    display: flex;
+    margin: 30px;
+    border-top: none;
+    border-right: none;
+    border-left: none;
 }
 
-.img_Cadastro {
-    margin-top: 30px;
-    margin-right: 200px;
+.campo_cad_tipoEvento{
+    margin-bottom: 30px;
+    color: grey;
+}
 
+.campo_preen{
+    display: flex;
+    flex-direction: column;
+    place-items: center;
+    padding: 0px 30px 30px;
 }
 
 /* Modificando i imput e select */
-
-.campo_cad_nome input {
-    width: 324px;
-    height: 30px;
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    border-bottom: 1px solid black;
-    outline: none;
-}
 
 
 @media screen and (max-width: 880px) {
@@ -74,17 +70,19 @@
         align-items: center;
     }
 
-    .img_Cadastro {
+    .banner_cadastro {
         display: none;
     }
 }
 
 @media screen and (max-width: 430px) {
-    .form_cadastro {
+    .form_cadastro h1{
         font-size: 20px;
     }
 
-    
+    .campo_preen, .campo_cad_nome{
+        padding: 0px 0px 0px 0px;
+    }
 
 
 }
