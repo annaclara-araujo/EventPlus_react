@@ -1,25 +1,30 @@
 import "./Cadastro.css";
 import Botao from "../botao/Botao";
-const Cadastro = (promps) => {
+const Cadastro = (props) => {
   return (
     <section className="section_cadastro">
-      <form action="" className="layout_grid form_cadastro">
-          <h1>{promps.tituloCadastro}</h1>
+       <form onSubmit={props.funcCadastro} className="layout_grid form_cadastro">
+          <h1>{props.tituloCadastro}</h1>
           <hr />
 
         <div className="campos_cadastro">
           <div className="banner_cadastro">
-            <img src={promps.img_banner} alt="" />
+            <img src={props.img_banner} alt="" />
           </div>
 
           <div className="campo_preen">
 
             <div className="campo_cad_nome">
               <label></label>
-              <input type="text" placeholder={promps.campoPlaceholder} />
+              <input 
+                  type="text" 
+                  placeholder={props.campoPlaceholder}
+                  value={props.valorInput}
+                  onChange={(e) => props.setValorInput(e.target.value)}
+              />
             </div>
 
-            <div className="campo_cad_tipoEvento" style={{ display: promps.visibilidade }}>
+            <div className="campo_cad_tipoEvento" style={{ display: props.visibilidade }}>
               <label htmlFor="tipoEvento"></label>
               <select name="tipoEvento" id="">
                 <option value="" disabled selected>Tipo Evento</option>

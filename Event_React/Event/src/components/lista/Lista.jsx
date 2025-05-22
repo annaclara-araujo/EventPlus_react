@@ -1,5 +1,4 @@
 
-
 import "./Lista.css"
 import Editar from "../../assests/img/Editar.png"
 import Excluir from "../../assests/img/Excluir.png"
@@ -19,13 +18,32 @@ const Lista = (props) => {
                         <th>Excluir</th>
                     </tr>
                 </thead>
+                    
                 <tbody>
-                    <tr className="item_lista">
+             {props.lista && props.lista.length > 0 ? (
+                props.lista.map((item) => (
+                    <tr className="item_lista" key={props.tipoLista == "TiposEventos" ? item.idTipoEvento : item.idTipo}>
                         <td>{props.titulo1}</td>
                         <td>{props.titulo2}</td>
-                        <td data-cell="Editar"><img src={Editar} alt="Imagem de uma caneta" /></td>
+                        <td data-cell="Editar">
+                            <button onClick={() => props.funcEditar(item)} className="bnt-editar">
+                            <img src={Editar} alt="Imagem de uma caneta" />
+                            </button>
+
+                         <td data-cell="Excluir">
+                            <button onClick={() => props.funcExcluir(item)} className="btn-excluir">
+                            <img src={Excluir} alt="Lixeira" />
+                            </button>
+                         </td>
+                        </td>
                         <td data-cell="Excluir"><img src={Excluir} alt="Lixeira" /></td>
                     </tr>
+                    ))
+             ) : (
+                    <tr>
+                         <td colSpan="4">Nenhum gênero foi encontrado.</td>
+                    </tr>
+             )}
                 </tbody>
             </div>
         </section>
