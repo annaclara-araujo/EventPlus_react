@@ -1,5 +1,7 @@
 import "./Cadastro.css";
 import Botao from "../botao/Botao";
+
+
 const Cadastro = (props) => {
   return (
     <section className="section_cadastro">
@@ -15,7 +17,7 @@ const Cadastro = (props) => {
           <div className="campo_preen">
 
             <div className="campo_cad_nome">
-              <label></label>
+               <label htmlFor=""></label>
               <input 
                   type="text" 
                   placeholder={props.campoPlaceholder}

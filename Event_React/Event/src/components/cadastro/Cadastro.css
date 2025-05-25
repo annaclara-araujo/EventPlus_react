@@ -1,68 +1,74 @@
 .section_cadastro {
-    background-color: #ffffff;
-    color: rgb(0, 0, 0);
-    padding: 50px 0;
+    color: black;
+    min-height: 399px;
+    padding: 35px 0 0;
 }
 
 .form_cadastro {
     display: flex;
-
-    justify-content: column;
+    flex-direction: column;
     align-items: center;
 }
 
 .form_cadastro h1 {
     text-transform: uppercase;
-    font-size: medium;
+    font-size: medium;  
 }
 
 .form_cadastro hr {
     max-width: 100px;
     width: 100%;
     border-style: solid;
-    margin: 0 auto;
     border-width: 1px;
-    border-color: #73061b;
+    border-color: #ad0729;
     margin-top: 5px;
 }
 
 .campos_cadastro {
     display: flex;
     align-items: center;
-    padding-top: 60px;
-    gap: 30px;
 
+    padding-top: 35px;
+    gap: 25px;
 }
 
-.campos_cad_nome input, 
-.campo_cad_tipoEvento {
+/* Modificando o input e select */
+
+.campo_cad_nome input,
+.campo_cad_genero select 
+{   
     border-radius: 6px;
     outline: none;
-    padding: 0px 5px;
+    padding: 0 5px;
     width: 300px;
     height: 30px;
     margin-top: 7px;
+}
+
+.campo_cad_nome input,
+.campo_cad_genero select {
     display: flex;
     margin: 30px;
+
     border-top: none;
     border-right: none;
     border-left: none;
+    outline: none;
+}
+.campo_cad_genero{
+    margin-bottom: 30PX;
+    color: gray;
 }
 
-.campo_cad_tipoEvento{
-    margin-bottom: 30px;
-    color: grey;
-}
-
-.campo_preen{
+.campo_preen {
     display: flex;
     flex-direction: column;
+    /* justify-content: center; */
     place-items: center;
-    padding: 0px 30px 30px;
+
+    padding: 0 30px 30px 30px;
+
 }
-
-/* Modificando i imput e select */
-
 
 @media screen and (max-width: 880px) {
     .campos_cadastro {
@@ -70,19 +76,17 @@
         align-items: center;
     }
 
-    .banner_cadastro {
+    .banner_cadastro{
         display: none;
     }
 }
 
 @media screen and (max-width: 430px) {
-    .form_cadastro h1{
+    .form_cadastro h1 {
         font-size: 20px;
     }
 
     .campo_preen, .campo_cad_nome{
         padding: 0px 0px 0px 0px;
     }
-
-
 }

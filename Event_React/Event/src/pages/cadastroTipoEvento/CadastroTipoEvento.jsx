@@ -15,7 +15,7 @@ const CadastroTipoEvento = () => {
 
 
     function alertar(icone, mensagem) {
-        
+
         Swal.fire({
             title: "Are you sure?",
             text: "You won't be able to revert this!",
@@ -33,7 +33,7 @@ const CadastroTipoEvento = () => {
                 });
             }
         });
-     
+
         //----------alertarAAAA SUCESSO--------------------------------------------
         const Toast = Swal.mixin({
             toast: true,
@@ -61,9 +61,9 @@ const CadastroTipoEvento = () => {
             try {
 
                 await api.post("tiposEventos", { tituloTipoEvento: tipoEvento });
-                setTipoEvento("");
                 alertar("success", "Cadastrado com sucesso!")
-                
+                setTipoEvento("");
+
             } catch (error) {
                 console.log(error);
                 alertar("error", "Erro ao cadastrar! Entre em contato")
@@ -76,22 +76,22 @@ const CadastroTipoEvento = () => {
     }
 
 
-     async function listarTipoEvento() {
-         try {
+    async function listarTipoEvento() {
+        try {
 
-             const resposta = await api.get("tiposEventos");
-             //console.log(resposta.data);
-              setListaTipoEvento(resposta.data);
-             //console.log(resposta.data);
+            const resposta = await api.get("tiposEventos");
+            //console.log(resposta.data);
+            setListaTipoEvento(resposta.data);
+            //console.log(resposta.data);
 
-         } catch (error) {
-             console.log(error);
-         }
-     }
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
-       useEffect(() => {
-         listarTipoEvento()
-    }, [listarTipoEvento]);
+    /*  useEffect(() => {
+        listarTipoEvento()
+   }, [listarTipoEvento]);*/
 
     //  async function deletarTipoEvento(tipoeventoId) {
     //     try {
@@ -106,25 +106,26 @@ const CadastroTipoEvento = () => {
     //             confirmButtonText: "Sim, delete isso!"
     //         }).then(async (result) => {
     //             if (result.isConfirmed) {
-    //                 await api.delete(`genero/${tipoeventoId.idTipoEvento}`);
-    //                 Swal.fire({
-    //                     title: "Deletado!",
-    //                     text: "Tipo de evento deletado com sucesso!",
-    //                     icon: "success"
-    //                 });
+    //              await api.delete(`TiposEventos/${id.idTipoEvento}`);
+    //            alertar("success", "Gênero Excluido!")
     //             }
     //         });
-    //         listaTipoEvento();
 
-    //     } catch (error) {
-    //         console.log(error);
-    //     }
+    //     } catch(error => {
+    //        console.log(error);
+    // alertar("error", "Erro ao Excluir!");
+    //    });
+    // try {
+    //     api.delete(`TipoEvento/${id.idTipoEvento}`);
+    //     alert("apagou")
+    // } catch (error) {
+    //     console.log(error);
 
+    // }
     // }
 
     // async function editarTipoEvento(tipoEvento) {
-    //    console.log("yas fica quieta");
-       
+
     //     const { value: novoTipoEvento } = await Swal.fire({
     //         title: "Edite seu evento",
     //         input: "text",
@@ -139,14 +140,11 @@ const CadastroTipoEvento = () => {
     //     });
     //     if (novoTipoEvento) {
     //         try{
-    //             console.log(tipoEvento.tituloTipoEvento);
-    //             console.log(novoTipoEvento);
-    //             api.put(`tiposEventos/${tipoEvento.idTipoEvento}`,
-    //             {nome: novoTipoEvento});
+    //             api.put(`tiposEventos/${tipoEvento.idTipoEvento}`, { tituloTipoEvento: novoTipoEvento });
     //             Swal.fire(`O evento modificado ${novoTipoEvento}`);
     //         }catch(error){
     //             console.log(error);
-                
+
     //         }
     //     }
     // }
@@ -179,18 +177,13 @@ const CadastroTipoEvento = () => {
                     lista={listaTipoEvento}
                     tipoLista="TiposEventos"
 
-                    // funcExcluir={deletarTipoEvento}
-                    // funcEditar={editarTipoEvento}
+                    //funcExcluir={deletarTipoEvento}
+                    //funcEditar={editarTipoEvento}
                 />
 
 
 
             </main>
-
-
-
-
-
             <Footer />
         </>
     )

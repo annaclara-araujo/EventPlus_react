@@ -2,7 +2,7 @@
 import "./Header.css"
 import Logo from "../../assests/img/logo.svg";
 import Adm from "../../assests/img/simboloAdm.png"
-
+import {Link} from "react-router-dom"
 
 
 
@@ -11,19 +11,22 @@ const Header = () => {
         <header>
         <div className="layout_grid cabecalho">
         {/* /* ao clicar no link redireciona para tela Login */} 
+        
+        <Link to="/">
         <img src= {Logo} alt= "Logo Event" />
+        </Link>
        
-     <div className="nav_header">
-        <a className="link_header" href="">Home</a>
-        <a className="link_header" href="">Eventos</a>
-        <a className="link_header" href="">Usuarios</a>
-        <a className="link_header" href="">Contatos</a>
-    </div>
+     <nav className="nav_header">
+        <Link to="/TipoEvento" className="link_header" href="">Home</Link>
+        <Link to="/Eventos" className="link_header" href="">Eventos</Link>
+        <Link to="/TipoUsuario" className="link_header" href="">Usuarios</Link>
+        <Link to="/Contatos" className="link_header" href="">Contatos</Link>
+    </nav>
 
     <div className="div_adm">
-        <a className="link_header" href="">Administrador<img src={Adm} /> </a>
+         <Link to="/Administrador" className="link_header" href="">Administrador</Link>
     </div>
-
+        <img className="adm" src={Adm}/>
  </div>
 </header>
     )
