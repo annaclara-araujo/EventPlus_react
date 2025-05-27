@@ -80,75 +80,66 @@ const CadastroTipoEvento = () => {
         try {
 
             const resposta = await api.get("tiposEventos");
-            //console.log(resposta.data);
             setListaTipoEvento(resposta.data);
-            //console.log(resposta.data);
-
         } catch (error) {
             console.log(error);
         }
     }
 
-    /*  useEffect(() => {
+
+    async function deletarTipoEvento(tipoeventoId) {
+        try {
+
+            Swal.fire({
+                title: "Você tem certeza?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Sim, delete isso!"
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    await api.delete(`tiposEventos/${tipoeventoId.idTipoEvento}`);
+                    alertar("success", "Gênero Excluido!")
+                }
+            });
+
+        } catch (error) {
+            console.log(error);
+            alertar("error", "Erro ao Excluir!");
+        };
+
+    }
+
+
+    async function editarTipoEvento(tipoEvento) {
+
+        const { value: novoTipoEvento } = await Swal.fire({
+            title: "Edite seu evento",
+            input: "text",
+            inputLabel: "Novo Tipo Evento",
+            inputValue: tipoEvento.tituloTipoEvento,
+            showCancelButton: true,
+            inputValidator: (value) => {
+                if (!value) {
+                    return "O campo precisa estar preenchido!";
+                }
+            }
+        });
+        if (novoTipoEvento) {
+            try {
+                api.put(`tiposEventos/${tipoEvento.idTipoEvento}`, { tituloTipoEvento: novoTipoEvento });
+                Swal.fire(`O evento modificado ${novoTipoEvento}`);
+            } catch (error) {
+                console.log(error);
+
+            }
+        }
+    }
+
+    useEffect(() => {
         listarTipoEvento()
-   }, [listarTipoEvento]);*/
-
-    //  async function deletarTipoEvento(tipoeventoId) {
-    //     try {
-
-    //         Swal.fire({
-    //             title: "Você tem certeza?",
-    //             text: "Você não poderá reverter isso!",
-    //             icon: "warning",
-    //             showCancelButton: true,
-    //             confirmButtonColor: "#3085d6",
-    //             cancelButtonColor: "#d33",
-    //             confirmButtonText: "Sim, delete isso!"
-    //         }).then(async (result) => {
-    //             if (result.isConfirmed) {
-    //              await api.delete(`TiposEventos/${id.idTipoEvento}`);
-    //            alertar("success", "Gênero Excluido!")
-    //             }
-    //         });
-
-    //     } catch(error => {
-    //        console.log(error);
-    // alertar("error", "Erro ao Excluir!");
-    //    });
-    // try {
-    //     api.delete(`TipoEvento/${id.idTipoEvento}`);
-    //     alert("apagou")
-    // } catch (error) {
-    //     console.log(error);
-
-    // }
-    // }
-
-    // async function editarTipoEvento(tipoEvento) {
-
-    //     const { value: novoTipoEvento } = await Swal.fire({
-    //         title: "Edite seu evento",
-    //         input: "text",
-    //         inputLabel: "Novo Tipo Evento",
-    //         inputValue: tipoEvento.tituloTipoEvento,
-    //         showCancelButton: true,
-    //         inputValidator: (value) => {
-    //             if (!value) {
-    //                 return "O campo precisa estar preenchido!";
-    //             }
-    //         }
-    //     });
-    //     if (novoTipoEvento) {
-    //         try{
-    //             api.put(`tiposEventos/${tipoEvento.idTipoEvento}`, { tituloTipoEvento: novoTipoEvento });
-    //             Swal.fire(`O evento modificado ${novoTipoEvento}`);
-    //         }catch(error){
-    //             console.log(error);
-
-    //         }
-    //     }
-    // }
-
+    }, [listaTipoEvento]);
 
     return (
         <>
@@ -171,14 +162,14 @@ const CadastroTipoEvento = () => {
 
                     listatitulo="Lista Tipo De Eventos"
                     titulocoluna="Titulo"
-                    titulo="Tipo Evento"
-                    titulo1="Titulo Evento"
+                    // titulo="Tipo Evento"
+                    // titulo1="Titulo Evento"
 
                     lista={listaTipoEvento}
                     tipoLista="TiposEventos"
 
-                    //funcExcluir={deletarTipoEvento}
-                    //funcEditar={editarTipoEvento}
+                    funcExcluir={deletarTipoEvento}
+                    funcEditar={editarTipoEvento}
                 />
 
 

@@ -1,14 +1,10 @@
-
-
-
-
 .listagem {
     min-height: calc(100vh - (76px + 241px + 33px));
 
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 40px 0;    
+    padding: 40px 0;
 
     background-color: #B51D44;
     color: white;
@@ -66,26 +62,21 @@
     border-bottom: 1px solid white;
 }
 
-.tabela .item_lista :nth-child(2){
+.tabela .item_lista :nth-child(2) {
     text-align: start;
 }
 
 @media screen and (max-width:728px) {
-    .tabela{
-        font-size: 10px; 
+    .tabela {
+        font-size: 10px;
     }
-    .tabela .item_lista :nth-child(3){
+
+    .tabela .item_lista :nth-child(3) {
         width: 110px;
     }
+
     .listagem h1 {
         font-size: large;
     }
-    
+
 }
-
-
-
-
-
-
-

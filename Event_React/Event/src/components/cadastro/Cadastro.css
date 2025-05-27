@@ -12,7 +12,7 @@
 
 .form_cadastro h1 {
     text-transform: uppercase;
-    font-size: medium;  
+    font-size: medium;
 }
 
 .form_cadastro hr {
@@ -35,8 +35,7 @@
 /* Modificando o input e select */
 
 .campo_cad_nome input,
-.campo_cad_genero select 
-{   
+.campo_cad_tipoEvento select {
     border-radius: 6px;
     outline: none;
     padding: 0 5px;
@@ -46,7 +45,7 @@
 }
 
 .campo_cad_nome input,
-.campo_cad_genero select {
+.campo_cad_tipoEvento select {
     display: flex;
     margin: 30px;
 
@@ -55,10 +54,47 @@
     border-left: none;
     outline: none;
 }
-.campo_cad_genero{
+
+.campo_cad_tipoEvento {
     margin-bottom: 30PX;
     color: gray;
 }
+
+.campo_instituicao input,
+.instituicao select{
+    border-radius: 6px;
+    outline: none;
+    padding: 0 5px;
+    width: 300px;
+    height: 30px;
+    margin-top: 7px;
+}
+
+.campo_instituicao input,
+.instituicao select{
+    display: flex;
+    margin: 30px;
+
+    border-top: none;
+    border-right: none;
+    border-left: none;
+    outline: none;
+}
+
+.instituicao{
+    margin-bottom: 30PX;
+    color: gray;
+}
+
+.descricao textarea{
+    width: 300px;
+    height: 50px ;
+    display: flex;
+    margin: 30px;
+
+}
+
+
 
 .campo_preen {
     display: flex;
@@ -76,7 +112,7 @@
         align-items: center;
     }
 
-    .banner_cadastro{
+    .banner_cadastro {
         display: none;
     }
 }
@@ -86,7 +122,8 @@
         font-size: 20px;
     }
 
-    .campo_preen, .campo_cad_nome{
+    .campo_preen,
+    .campo_cad_nome {
         padding: 0px 0px 0px 0px;
     }
 }
