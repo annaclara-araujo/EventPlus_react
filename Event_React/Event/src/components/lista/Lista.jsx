@@ -2,6 +2,7 @@
 import "./Lista.css"
 import Editar from "../../assests/img/Editar.png"
 import Excluir from "../../assests/img/Excluir.png"
+import Descricao from "../../assests/img/Descricao.png"
 
 const Lista = (props) => {
     return (
@@ -23,10 +24,14 @@ const Lista = (props) => {
                     {props.lista && props.lista.length > 0 ? (
                         props.lista.map((item) => (
 
-                            <tr className="item_lista" key={props.tipoLista == "TiposEventos" ? item.idTipoEvento : item.idTipoUsuario}>
+                            <tr className="item_lista" key={props.tipoLista == "TiposEventos" ? item.idTipoEvento : item.idTipoUsuario ? item.idEvento : item.idEvento}>
 
-                                <td data-cell="Nome">{props.tipoLista == "TiposEventos" ? item.tituloTipoEvento : item.tituloTipoUsuario}</td>
+                                 <td data-cell="Nome" style={{ display: props.tiposEvento }}>{props.tipoLista == "TiposEventos" ? item.tituloTipoEvento : item.tituloTipoUsuario ? item.nomeEvento : item.nomeEvento}</td>
 
+                               
+                                <td data-cell="Tipo Evento" style={{display: props.visibilidade}}>{item.tiposEvento?.tituloTipoEvento}</td>
+
+                                {/* <td data-cell="Data Evento" style={{display: props.visibilidade}}>{new Date(item.dataEvento).toLocaleDateString('pt-BR')}</td> */}
                                 <td></td>
 
                                 <td data-cell="Editar">
@@ -39,6 +44,13 @@ const Lista = (props) => {
                                     <img
                                         className="bnt-excluir" src={Excluir} alt="icone de excluir"
                                         onClick={() => props.funcExcluir(item)}
+                                    />
+                                </td>
+
+                                 <td data-cell="descrição" className="btn_edicao" style={{display: props.visibilidade2}}>
+                                    <img src={Descricao}
+                                        alt="exclamacao"
+                                        onClick={() => props.funcDescricao(item)}
                                     />
                                 </td>
                             </tr>

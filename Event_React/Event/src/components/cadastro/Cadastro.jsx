@@ -18,38 +18,48 @@ const Cadastro = (props) => {
 
           <div className="campo_preen">
             <div className="campo_cad_nome">
-              <div className="campo_cad_tipoEvento" style={{ display: props.visibilidade }}>
-                <label htmlFor=""></label>
+
+              <div>
                 <input
                   type="text"
                   placeholder={props.campoPlaceholder}
                   value={props.valorInput}
                   onChange={(e) => props.setValorInput(e.target.value)}
                 />
+              </div>
 
+              <div className="campo_cad_data" style={{ display: props.visibilidade }}>
                 <input
                   type="date"
-                  placeholder={props.campoData}
-                  value={props.valorInput}
-                  onChange={(e) => props.setValorInput(e.target.value)}
-                  style={{ display: props.visibilidade }}
+                  placeholder="campoData"
+                  value={props.valorData}
+                  onChange={(e) => props.setValorData(e.target.value)}
                 />
-                <label htmlFor="tipoEvento"></label>
-                <select name="tipoEvento" id="">
+
+                <select name="tipoEvento" id=""
+                  style={{ display: props.visibilidade }}
+                  value={props.valorTipoEvento}
+                  onChange={(e) => props.setValorTipoEvento(e.target.value)}>
                   <option value="" disabled selected>Tipo Evento</option>
-                  <option value="">Festa</option>
-                  <option value="">Social</option>
-                  <option value="">Trabalho</option>
+                  {props.lista &&
+                    props.lista.length > 0 &&
+                    props.lista.map((itemEvento) =>
+                      <option value={itemEvento.idTipoEvento}>{itemEvento.tituloTipoEvento}</option>
+                    )}
                 </select>
 
-                <select name="tipoEvento" id="">
-                  <option value="" disabled selected>Tipo Evento</option>
+
+                <select name="Instituicao" id="">
+                  <option value="" disabled selected>Instituicao</option>
                   <option value="E47E2F25-8E58-4E48-983B-36281FA6BA37">SENAI</option>
-
                 </select>
+
 
                 <div className="descricao">
-                <textarea name="" id="" style={{ display: props.visibilidade }}></textarea>
+                  <textarea name="" id="" style={{ display: props.visibilidade }}
+                    value={props.valorInputDescricao}
+                    onChange={(e) => props.setValorInputDescricao(e.target.value)}>
+                  </textarea>
                 </div>
 
               </div>

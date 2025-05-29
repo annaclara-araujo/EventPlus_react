@@ -35,7 +35,7 @@
 /* Modificando o input e select */
 
 .campo_cad_nome input,
-.campo_cad_tipoEvento select {
+.campo_cad_data select {
     border-radius: 6px;
     outline: none;
     padding: 0 5px;
@@ -45,7 +45,7 @@
 }
 
 .campo_cad_nome input,
-.campo_cad_tipoEvento select {
+.campo_cad_data select {
     display: flex;
     margin: 30px;
 
@@ -55,7 +55,7 @@
     outline: none;
 }
 
-.campo_cad_tipoEvento {
+.campo_cad_data {
     margin-bottom: 30PX;
     color: gray;
 }
