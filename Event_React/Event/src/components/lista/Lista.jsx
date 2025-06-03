@@ -17,6 +17,7 @@ const Lista = (props) => {
                         <th>{props.titulocoluna2}</th>
                         <th>Editar</th>
                         <th>Excluir</th>
+                        <th>Descrição</th>
                     </tr>
                 </thead>
 
@@ -24,12 +25,12 @@ const Lista = (props) => {
                     {props.lista && props.lista.length > 0 ? (
                         props.lista.map((item) => (
 
-                            <tr className="item_lista" key={props.tipoLista == "TiposEventos" ? item.idTipoEvento : item.idTipoUsuario ? item.idEvento : item.idEvento}>
+                            <tr className="item_lista" key={props.tipoLista == "TiposEventos" ? item.idTipoEvento : item.idTipoUsuario ? item.idEvento : item.idTipoUsuario}>
 
-                                 <td data-cell="Nome" style={{ display: props.tiposEvento }}>{props.tipoLista == "TiposEventos" ? item.tituloTipoEvento : item.tituloTipoUsuario ? item.nomeEvento : item.nomeEvento}</td>
+                                <td data-cell="Nome" style={{ display: props.tiposEvento }}>{props.tipoLista == "TiposEventos" ? item.tituloTipoEvento : item.tituloTipoUsuario ? item.nomeEvento : item.nomeEvento} {item.tituloTipoUsuario} </td>
 
-                               
-                                <td data-cell="Tipo Evento" style={{display: props.visibilidade}}>{item.tiposEvento?.tituloTipoEvento}</td>
+
+                                <td data-cell="Tipo Evento" style={{ display: props.visibilidade }}>{item.tipoEvento?.tituloTipoEvento} </td>
 
                                 {/* <td data-cell="Data Evento" style={{display: props.visibilidade}}>{new Date(item.dataEvento).toLocaleDateString('pt-BR')}</td> */}
                                 <td></td>
@@ -47,7 +48,7 @@ const Lista = (props) => {
                                     />
                                 </td>
 
-                                 <td data-cell="descrição" className="btn_edicao" style={{display: props.visibilidade2}}>
+                                <td data-cell="descrição" className="btn_edicao" style={{ display: props.visibilidade2 }}>
                                     <img src={Descricao}
                                         alt="exclamacao"
                                         onClick={() => props.funcDescricao(item)}
