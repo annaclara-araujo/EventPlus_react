@@ -1,7 +1,7 @@
 import Footer from "../../components/footer/Footer"
 import Header from "../../components/header/Header";
 import Comentario from "../../assests/img/comentario.png"
-import Informacao from "../../assests/img/informacoes.png"
+import Descricao from "../../assests/img/informacoes.png"
 import Toggle from "../../components/toggle/Toggle";
 import Modal from "../../components/modal/Modal"
 import "./ListaEvento.css";
@@ -11,11 +11,47 @@ import { format } from "date-fns";
 const ListaEvento = () => {
 
     const [listaEventos, setListaEventos] = useState([])
+    const [tipoModal, setTipoModal] = useState("") //"descricaoEvento" ou "Comentario"
+    const [dadosModal, setDadosModal] = useState([]) //descricao, idEvento, etc.
+    const [modalAberto, settModalAberto] = useState([false])
+
+    const [usuarioId, setUsuarioId] = useState("67299B4B-D582-4127-A3B9-EB8902386071")
 
     async function listarEventos() {
         try {
             const resposta = await api.get("Eventos");
-            setListaEventos(resposta.data);
+            const todosOsEventos = resposta.data;
+            
+            const respostaPresenca = await api.get("PresencaEventos/ListarMinhas"+usuarioId)
+            const minhasPresencas = respostaPresenca.data;
+
+            const eventosComPresencas = todosOsEventos.map((atualEvento) => {
+                const presenca = minhasPresencas.find(p => p.idEvento === atualEvento.idEvento)
+
+                return{
+                    //As informacoes tanto de eventos quanto de eventos que possuem presenca
+                    ...atualEvento,
+
+                    possuiPresenca: presenca?.situacao === true,
+                    idPresenca: presenca?.idPresencaEvento || null
+                }
+
+            })
+
+            setListaEventos(eventosComPresencas);
+            console.log(resposta.data);
+
+            console.log("Informacoes de todos os eventos");
+            console.log(todosOsEventos);
+
+            console.log("Informacoes de eventos com presenca");
+            console.log(todosOsEventos);
+
+            console.log("Informacoes de todos os eventos com presenca");
+            console.log(todosOsEventos);
+            
+            
+
         } catch (error) {
             console.log(error);
 
@@ -25,6 +61,27 @@ const ListaEvento = () => {
     useEffect(() => {
         listarEventos();
     }, [])
+
+    function abrirModal(tipo,dados) {
+        settModalAberto(true)
+        setTipoModal(tipo)
+        setDadosModal(dados)
+
+    }
+
+    function fecharModal() {
+        settModalAberto(false)
+        setDadosModal({})
+        setTipoModal("")
+    }
+
+
+
+
+
+
+
+
 
     return (
         <>
@@ -63,34 +120,35 @@ const ListaEvento = () => {
 
                             {listaEventos.length > 0 ? (
                                 listaEventos.map((item) => (
-                           
-                           <tr className="item_listagem espaco">
-                                <td >{item.nomeEvento}</td>
-                                <td >{format(item.dataEvento, "dd/MM/yy")}</td>
-                                <td >{item.tiposEvento.tituloTipoEvento}</td>
 
-                                <td data-cell="descricao">
-                                    <button>
-                                        <img src={Informacao} alt="" />
-                                    </button>
-                                </td>
+                                    <tr className="item_listagem espaco">
+                                        <td >{item.nomeEvento}</td>
+                                        <td >{format(item.dataEvento, "dd/MM/yy")}</td>
+                                        <td >{item.tiposEvento.tituloTipoEvento}</td>
 
-                                <td data-cell="Comentários">
-                                    <button>
-                                        <img src={Comentario} alt="" />
-                                    </button>
-                                </td>
+                                        <td className="descricao" onClick={() => abrirModal("descricaoEvento", {descricao: item.descricao})}>
+                                            <button>
+                                                <img src={Descricao} alt="" />
+                                            </button>
+                                        </td>
 
-                                <td data-cell="Participar"><Toggle /></td>
+                                        <td className="Comentários" onClick={() => abrirModal("comentarios", {idEvento: item.idEvento})}>
+                                            <button>
+                                                <img src={Comentario} alt="" />
+                                            </button>
+                                        </td>
 
-                            </tr>
+                                        <td className="Participar"><Toggle presenca={item.possuiPresenca}
+                                        /></td>
 
-                            ))
-                            ):
-                            (
-                                <p> nenheum evento encontrado</p>
-                            )
-                        }
+                                    </tr>
+
+                                ))
+                            ) :
+                                (
+                                    <p> nenheum evento encontrado</p>
+                                )
+                            }
 
 
                         </tbody>
@@ -98,7 +156,20 @@ const ListaEvento = () => {
                 </div>
             </section>
             <Footer />
-            <Modal />
+
+            {modalAberto &&(
+
+                <Modal
+                titulo={tipoModal == "descricaoEvento" ? "Descrição do evento" : "Comentario"}
+
+                tipoModel = {tipoModal}
+
+                idEvento ={dadosModal.idEvento}
+
+                descricao = {dadosModal.descricao}
+                fecharModal={fecharModal}
+                />
+            )}
         </>
     );
 }

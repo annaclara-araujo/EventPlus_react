@@ -95,7 +95,7 @@
 
 
 .botao button {
- background-color: #c2185b;
+    background-color: #c2185b;
     color: #fff;
     padding: 10px 20px;
     border: none;
@@ -108,5 +108,6 @@
 .botao button:hover {
     background-color: #ad1457;
 }
+
 
 

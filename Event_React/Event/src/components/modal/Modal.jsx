@@ -1,6 +1,48 @@
 import React from 'react'
+import ImgDeletar from "../../assests/img/deletar.png"
+import "./Modal.css"
+import { useState, useEffect } from "react";
+import api from "../../Services/services";
 
 const Modal = (props) => {
+
+    const[comentarios,setComentarios] = useState([]);
+
+    async function listarComentarios() {
+        try {
+           const resposta = await api.get(`ComentariosEventos/ListarSomenteExibe?id=${props.idEvento}`);
+           setComentarios(resposta.data);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    async function cadastrarComentario(params) {
+        
+    }
+
+    async function deletarComentario(params) {
+        
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+     useEffect(() => {
+        listarComentarios();
+    }, [])
+
+
+
+
     return (
         <>
 

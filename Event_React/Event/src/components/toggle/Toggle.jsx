@@ -8,7 +8,7 @@ const Toggle = () => {
         <> 
     <div className="wrapper"> 
     <label className="switch"> 
-    <input type="checkbox" /> 
+    <input type="checkbox" checked={props.presenca} /> 
     <span className="slider round"></span> 
     </label> 
     </div> 
