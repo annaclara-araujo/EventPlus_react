@@ -7,6 +7,8 @@ import api from "../../Services/services";
 const Modal = (props) => {
 
     const[comentarios,setComentarios] = useState([]);
+    const [novoComentario, setNovoComentario] = useState("");
+    const [usuarioId,setUsuario] = useState("67299B4B-D582-4127-A3B9-EB8902386071")
 
     async function listarComentarios() {
         try {
@@ -17,23 +19,26 @@ const Modal = (props) => {
         }
     }
 
-    async function cadastrarComentario(params) {
-        
+    async function cadastrarComentario(comentario) {
+        try {
+            await api.post("ComentariosEventos",
+                { idUsuario:usuarioId,
+                idEvento: props.idEvento,
+                descricao: comentario})
+        } catch (error) {
+            console.log(error);
+
+        }
     }
 
-    async function deletarComentario(params) {
-        
+    async function deletarComentario(idComentario) {
+        try {
+            await api.delete(`ComentariosEventos/${idComentario}`);
+        } catch (error) {
+            console.log(error);
+            
+        }
     }
-
-
-
-
-
-
-
-
-
-
 
 
      useEffect(() => {
@@ -62,7 +67,8 @@ const Modal = (props) => {
                                 <strong>{item.usuario.nomeUsuario}
                                 </strong>
                                 <img src={ImgDeletar}
-                                alt="deletar"/>
+                                alt="deletar"
+                                onClick={() => deletarComentario(item.idComentarioEvento)}/>
                                 <p>{item.descricao}</p>
                                 <hr />
 
@@ -72,8 +78,9 @@ const Modal = (props) => {
                             <div>
                                 <input type="text"
                                 placeholder='Escreva seu comentario ...'
-                                />
-                                <button>
+                                value={novoComentario}
+                                onChange={(e) =>setNovoComentario(e.target.value)}/>
+                                <button onClick={() => cadastrarComentario(novoComentario)}>
                                     Cadastrar
                                 </button>
                             </div>

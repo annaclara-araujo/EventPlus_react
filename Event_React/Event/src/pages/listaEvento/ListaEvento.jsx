@@ -8,12 +8,16 @@ import "./ListaEvento.css";
 import { useState, useEffect } from "react";
 import api from "../../Services/services";
 import { format } from "date-fns";
+import Swal from 'sweetalert2';
+
 const ListaEvento = () => {
 
     const [listaEventos, setListaEventos] = useState([])
     const [tipoModal, setTipoModal] = useState("") //"descricaoEvento" ou "Comentario"
     const [dadosModal, setDadosModal] = useState([]) //descricao, idEvento, etc.
     const [modalAberto, settModalAberto] = useState([false])
+
+    const [filtroData, setFiltroData] = useState(["todos"])
 
     const [usuarioId, setUsuarioId] = useState("67299B4B-D582-4127-A3B9-EB8902386071")
 
@@ -22,7 +26,7 @@ const ListaEvento = () => {
             const resposta = await api.get("Eventos");
             const todosOsEventos = resposta.data;
             
-            const respostaPresenca = await api.get("PresencaEventos/ListarMinhas"+usuarioId)
+            const respostaPresenca = await api.get("PresencaEventos/listarMinhas"+usuarioId)
             const minhasPresencas = respostaPresenca.data;
 
             const eventosComPresencas = todosOsEventos.map((atualEvento) => {
@@ -39,16 +43,16 @@ const ListaEvento = () => {
             })
 
             setListaEventos(eventosComPresencas);
-            console.log(resposta.data);
+            // console.log(resposta.data);
 
-            console.log("Informacoes de todos os eventos");
-            console.log(todosOsEventos);
+            // console.log("Informacoes de todos os eventos");
+            // console.log(todosOsEventos);
 
-            console.log("Informacoes de eventos com presenca");
-            console.log(todosOsEventos);
+            // console.log("Informacoes de eventos com presenca");
+            // console.log(todosOsEventos);
 
-            console.log("Informacoes de todos os eventos com presenca");
-            console.log(todosOsEventos);
+            // console.log("Informacoes de todos os eventos com presenca");
+            // console.log(todosOsEventos);
             
             
 
@@ -75,9 +79,42 @@ const ListaEvento = () => {
         setTipoModal("")
     }
 
+    async function manipularPresenca(idEvento, presenca, idPresenca) {
+        try {
+            if(presenca && idPresenca != ""){
+                await api.put(`PresencasEventos/${idPresenca}`,
+                {situacao: false});
+                Swal.fire('Removido!', 'Sua presença foi removida.', 'success')
+            }else if(idPresenca != ""){
+                await api.put(`PresencasEventos/${idPresenca}`,
+                {situacao: true});
+                Swal.fire('Confirmado!', 'Sua presença foi confirmada.', 'success')
+            }else{
+                await api.post("PresencaEventos", {situacao: true, idUsuario: usuarioId, idEvento: idEvento});
+                 Swal.fire('Confirmado!', 'Sua presença foi confirmada.', 'success')
+            }
+        } catch (error) {
+            console.log(error);
+            
+        }
+    }
 
 
+    function filtrarEventos() {
+        const hoje = new Date();
 
+        return listaEventos.filter(evento => {
+            const dataEvento = new Date(evento.dataEvento);
+
+            if(filtroData.includes("todos")) return true;
+            if(filtroData.includes("futuros") && dataEvento > hoje)
+            return true;
+            if(filtroData.includes("passadas") && dataEvento < hoje)
+            return true;
+
+            return false;
+        })
+    }
 
 
 
@@ -96,11 +133,11 @@ const ListaEvento = () => {
 
                     <div className="left  seletor">
                         <label htmlFor="eventos"></label>
-                        <select name="eventos" id="">
-                            <option value="" disabled selected>Todos os eventos</option>
-                            <option value="">op1</option>
-                            <option value="">op2</option>
-                            <option value="">op3</option>
+                        
+                        <select onChange={(e) => setFiltroData([e.target.value])}>
+                            <option value="" selected>Todos os eventos</option>
+                            <option value="futuros">Somente futuros</option>
+                            <option value="passados">Somente passados</option>
                         </select>
                     </div>
 
@@ -119,7 +156,7 @@ const ListaEvento = () => {
                         <tbody>
 
                             {listaEventos.length > 0 ? (
-                                listaEventos.map((item) => (
+                                filtrarEventos() && filtrarEventos().map((item) => (
 
                                     <tr className="item_listagem espaco">
                                         <td >{item.nomeEvento}</td>
@@ -138,15 +175,18 @@ const ListaEvento = () => {
                                             </button>
                                         </td>
 
-                                        <td className="Participar"><Toggle presenca={item.possuiPresenca}
-                                        /></td>
+                                        <td className="Participar">
+                                            <Toggle presencaBotao={item.possuiPresenca}
+                                            manipular = { () => manipularPresenca(item.idEvento, item.possuiPresenca, item.idPresenca)}
+                                            />
+                                        </td>
 
                                     </tr>
 
                                 ))
                             ) :
                                 (
-                                    <p> nenheum evento encontrado</p>
+                                    <p> nenhum evento encontrado</p>
                                 )
                             }
 

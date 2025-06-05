@@ -8,36 +8,18 @@ import { useState, useEffect } from "react";
 import Swal from 'sweetalert2';
 
 const CadastroEvento = () => {
-
-    const [evento, setEvento] = useState("")
+    const [evento, setEvento] = useState("");
+    const [dataevento, setDataEvento] = useState("");
+    const [descricao, setDescricao] = useState("");
+    const [instituicao, setInstituicao] = useState("5C0B4A4B-1EA5-401E-866D-9E6DACD156F0");
+    const [tipoEvento, setTipoEvento] = useState("");
     const [listaTipoEvento, setListaTipoEvento] = useState([])
     const [listaEvento, setListaEvento] = useState([])
-    const [data, setData] = useState("")
-    const [tipoEvento, setTipoEvento] = useState("")
-    const [descricao, setDescricao] = useState("")
-    const [Instituicao, setInstituicao] = useState("E47E2F25-8E58-4E48-983B-36281FA6BA37")
+    
+
+
 
     function alertar(icone, mensagem) {
-
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                Swal.fire({
-                    title: "Deleted!",
-                    text: "Your file has been deleted.",
-                    icon: "success"
-                });
-            }
-        });
-
-        //----------alertarAAAA SUCESSO--------------------------------------------
         const Toast = Swal.mixin({
             toast: true,
             position: "top-end",
@@ -53,90 +35,19 @@ const CadastroEvento = () => {
             icon: icone,
             title: mensagem
         });
-
-    }
-
-    async function cadastrarEvento(evt) {
-        evt.preventDefault();
-
-        console.log(data);
-        console.log(Instituicao);
-        console.log(descricao);
-        console.log(tipoEvento);
-        console.log(evento);
-
-
-
-        if (evento.trim() != "") {
-
-            try {
-
-                await api.post("Eventos", { nomeEvento: evento, dataEvento: data, descricao: descricao, idTipoEvento: tipoEvento, idInstituicao: Instituicao });
-                alertar("success", "Cadastrado com sucesso!")
-                setEvento("");
-                setData();
-                setDescricao("");
-                setTipoEvento("");
-                setInstituicao("");
-
-            } catch (error) {
-                console.log(error);
-                alertar("error", "Erro ao cadastrar! Entre em contato")
-                // console.log({
-                //     DataEvento: data,
-                //     NomeEvento:data, 
-                //     Descricao: descricao, 
-                //     idTipoEvento: tipoEvento, 
-                //     Instituicao: Instituicao
-                // });
-            }
-        } else {
-            alertar("error", "Preencha o campo!")
-        }
     }
 
     async function listarTipoEvento() {
         try {
-            const resposta = await api.get("TiposEventos")
+            const resposta = await api.get("tiposEventos");
             setListaTipoEvento(resposta.data);
         } catch (error) {
             console.log(error);
 
         }
+
     }
-
-    async function listarEvento() {
-        try {
-            const resposta = await api.get("Eventos");
-            setListaEvento(resposta.data);
-        } catch (error) {
-            console.log(error);
-
-        }
-    }
-
-    async function deletarEvento(eventoId) {
-        try {
-            Swal.fire({
-                title: "Você tem certeza?",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Sim, delete isso!"
-            }).then(async (result) => {
-                if (result.isConfirmed) {
-                    await api.delete(`Eventos/${eventoId.idEvento}`);
-                    alertar("success", "Evento Excluido!")
-                }
-            });
-        } catch (error) {
-
-        }
-    }
-
-
-    async function editarEvento(evento) {
+    async function editarTipoEvento(evento) {
         try {
             const tiposOptions = listaTipoEvento
                 .map(tipo => `<option value="${tipo.idTipoEvento}" ${tipo.idTipoEvento === evento.idTipoEvento ? 'selected' : ''}>${tipo.tituloTipoEvento}</option>`)
@@ -192,13 +103,83 @@ const CadastroEvento = () => {
             Swal.fire("Erro!", "Não foi possível atualizar.", "error");
         }
     }
+    async function mostrarDescricao(descricao) {
+        const result = await Swal.fire({
+            title: "Descrição do evento", // "Deseja continuar?"
+            text: `Descrição: ${descricao}`, // Mostra a descrição atual
+            icon: "question",
+            iconHtml: "@",
+            confirmButtonText: "Tendi", // "Sim"
+            showCancelButton: true,
+            showCloseButton: true
+        });
 
+        return result.isConfirmed;
+    }
+
+
+    async function listarEvento() {
+        try {
+            const resposta = await api.get("eventos")
+            setListaEvento(resposta.data)
+        } catch (error) {
+            console.log(error);
+
+        }
+    }
+
+    async function deletarEvento(id) {
+
+        Swal.fire({
+            title: 'Tem certeza?',
+            text: "Você não poderá desfazer esta ação!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#b51d44',
+            cancelButtonColor: '#b5b5b5',
+            confirmButtonText: 'Sim, apagar!',
+            cancelButtonText: 'Cancelar',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                api.delete(`TiposEventos/${id.idTipoEvento}`);
+                alertar("success", "Gênero Excluido!")
+            }
+        }).catch(error => {
+            console.log(error);
+            alertar("error", "Erro ao Excluir!");
+        });
+    }
+
+    async function cadastrarEvento(evt) {
+        evt.preventDefault();
+        if (evento.trim() != "") {
+            try {
+                await api.post("eventos", {
+                    nomeEvento: evento,
+                    idTipoEvento: tipoEvento,
+                    dataEvento: dataevento,
+                    descricao: descricao,
+                    idInstituicao: instituicao
+                });
+                alertar("success", "Cadastro realizado com sucesso!");
+                setEvento("");
+                setDataEvento();
+                setDescricao("");
+                setTipoEvento("");
+
+            } catch (error) {
+                alertar("error", "Entre em contato com o suporte")
+            }
+        } else {
+            alertar("error", "Preencha o campo vazio")
+
+        }
+    }
 
     useEffect(() => {
-        listarTipoEvento()
-        listarEvento()
-    }, []);
-
+        listarTipoEvento();
+        listarEvento();
+    }, [listaEvento]);
 
     return (
         <>
@@ -219,18 +200,18 @@ const CadastroEvento = () => {
                     setValorInput={setEvento}
                     valorInput={evento}
 
-                    valorData={data}
-                    setValorData={setData}
+                    valorData={dataevento}
+                    setValorData={setDataEvento}
 
                     valorInputDescricao={descricao}
                     setValorInputDescricao={setDescricao}
 
-                    // tipoEvento={tipoEvento}
-                    // setTipoEvento={setTipoEvento}
+                    tipoEvento={tipoEvento}
+                    setTipoEvento={setTipoEvento}
 
                     setValorTipoEvento={setTipoEvento}
 
-                    Instituicao={Instituicao}
+                    Instituicao={instituicao}
                     setInstituicao={setInstituicao}
 
                     lista={listaTipoEvento}
@@ -249,7 +230,9 @@ const CadastroEvento = () => {
                     tipoLista="Evento"
 
                     funcExcluir={deletarEvento}
-                    funcEditar={editarEvento}
+                    funcEditar={editarTipoEvento}
+                    descricao={mostrarDescricao}
+                    valorText={descricao}
 
                 />
 

@@ -1,19 +1,19 @@
 import "./Toggle.css"
-import { useState } from "react";
 
+const Toggle = (props) => {
+    return (
 
-const Toggle = () => {
-    return(
+        <>
+            <div className="wrapper">
+                <label className="switch">
+                    <input type="checkbox"
+                        checked={props.presencaBotao} 
+                        onChange ={props.manipular}/>
+                    <span className="slider round"></span>
+                </label>
+            </div>
+        </>
 
-        <> 
-    <div className="wrapper"> 
-    <label className="switch"> 
-    <input type="checkbox" checked={props.presenca} /> 
-    <span className="slider round"></span> 
-    </label> 
-    </div> 
-    </>
-    
     )
 }
 
