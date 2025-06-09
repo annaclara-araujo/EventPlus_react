@@ -1,4 +1,4 @@
-import React from 'react'
+//import React from 'react'
 import ImgDeletar from "../../assests/img/deletar.png"
 import "./Modal.css"
 import { useState, useEffect } from "react";
@@ -8,7 +8,7 @@ const Modal = (props) => {
 
     const[comentarios,setComentarios] = useState([]);
     const [novoComentario, setNovoComentario] = useState("");
-    const [usuarioId,setUsuario] = useState("67299B4B-D582-4127-A3B9-EB8902386071")
+    const [usuarioId,setUsuarioId] = useState("")
 
     async function listarComentarios() {
         try {
@@ -25,6 +25,7 @@ const Modal = (props) => {
                 { idUsuario:usuarioId,
                 idEvento: props.idEvento,
                 descricao: comentario})
+                listarComentarios(); 
         } catch (error) {
             console.log(error);
 
@@ -64,8 +65,7 @@ const Modal = (props) => {
 
                             {comentarios.map((item) => (
                                 <div key={item.idComentarioEvento}>
-                                <strong>{item.usuario.nomeUsuario}
-                                </strong>
+                                <strong>{item.usuario.nomeUsuario}</strong>
                                 <img src={ImgDeletar}
                                 alt="deletar"
                                 onClick={() => deletarComentario(item.idComentarioEvento)}/>

@@ -15,7 +15,7 @@ const CadastroEvento = () => {
     const [tipoEvento, setTipoEvento] = useState("");
     const [listaTipoEvento, setListaTipoEvento] = useState([])
     const [listaEvento, setListaEvento] = useState([])
-    
+    const [excluirEvento, setExcluirEvento] = useState([])
 
 
 
@@ -117,6 +117,30 @@ const CadastroEvento = () => {
         return result.isConfirmed;
     }
 
+    //function listarDescricao(evento) {
+        //try {
+           // Swal.fire({
+              //  title: evento.nomeEvento,
+              //  text: evento.descricao,
+              //  showClass: {
+                 //   popup: `
+               //     animate__animated
+               //     animate__fadeInUp
+              //      animate__faster
+              //      `
+               // },
+              //  hideClass: {
+                //    popup: `
+              //      animate__animated
+              //      animate__fadeOutDown
+               //     animate__faster
+               //     `
+           //     }
+          //  });
+     //   } catch (error) {
+
+       // }
+   //   }
 
     async function listarEvento() {
         try {
@@ -141,7 +165,7 @@ const CadastroEvento = () => {
             cancelButtonText: 'Cancelar',
         }).then((result) => {
             if (result.isConfirmed) {
-                api.delete(`TiposEventos/${id.idTipoEvento}`);
+                api.delete(`eventos/${id.idEvento}`);
                 alertar("success", "Gênero Excluido!")
             }
         }).catch(error => {
@@ -226,13 +250,15 @@ const CadastroEvento = () => {
                     titulo1="Nome do Evento"
                     titulo2="Tipo do Evento"
 
-                    lista={listaTipoEvento}
+                    lista={listaEvento}
                     tipoLista="Evento"
 
                     funcExcluir={deletarEvento}
                     funcEditar={editarTipoEvento}
                     descricao={mostrarDescricao}
                     valorText={descricao}
+
+                    titulocoluna3="Descrição"
 
                 />
 

@@ -17,7 +17,7 @@ const Lista = (props) => {
                         <th>{props.titulocoluna2}</th>
                         <th>Editar</th>
                         <th>Excluir</th>
-                        <th>Descrição</th>
+                        <th>{props.titulocoluna3}</th>
                     </tr>
                 </thead>
 
@@ -58,7 +58,7 @@ const Lista = (props) => {
                         ))
                     ) : (
                         <tr>
-                            <td colSpan="4">Nenhum gênero foi encontrado.</td>
+                            <td>Nenhum gênero foi encontrado.</td>
                         </tr>
                     )}
                 </tbody>

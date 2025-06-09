@@ -168,7 +168,9 @@ const CadastroTipoUsuario = () => {
 
                     funcExcluir={deletarTipoUsuario}
                     funcEditar={editarTipoUsuario}
-                    visibilidade2="none"
+                    
+                   
+                  
 
                 />
 
