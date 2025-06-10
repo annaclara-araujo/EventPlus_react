@@ -1,26 +1,99 @@
 import "./Login.css";
 import Logo from "../../assests/img/logo.svg";
 import Botao from "../../components/botao/Botao";
+import api from "../../Services/services";
+import Swal from 'sweetalert2';
 
+import { useState } from "react";
+import { userDecodeToken } from "../../auth/Auth";
+import secureLocalStorage from "react-secure-storage";
+
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-    return(
-        <main className= "main_login">
-            <div className = "banner"></div>
+
+    const [email, setEmail] = useState("")
+    const [senha, setSenha] = useState("")
+
+    const navigate = useNavigate()
+
+    function alertar(icone, mensagem) {
+        const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+            }
+        });
+        Toast.fire({
+            icon: icone,
+            title: mensagem
+        });
+    }
+
+    async function realizarAutenticacao(e) {
+        e.preventDefault();
+        try {
+            const usuario = {
+                email: email,
+                senha: senha
+            }
+
+            if (senha.trim() != "" || email.trim() != "") {
+
+                const resposta = await api.post("Login", usuario);
+
+                const token = resposta.data.token
+
+                if (token) {
+                    const tokenDecodificado = userDecodeToken(token)
+
+                    //console.log("Token decodificado");
+                    console.log(tokenDecodificado);
+
+                    secureLocalStorage.setItem("tokenLogin", JSON.stringify(tokenDecodificado))
+
+                    if (tokenDecodificado.tipoUsuario === "aluno") {
+                        navigate("/ListaEvento")
+                    } else {
+                        navigate("/Evento")
+                    }
+
+                }
+
+            } else {
+                alertar("error", "Preencha os campos vazios para realizar o login!");
+            }
+            
+        } catch (error) {
+            console.log(error);
+            alertar("error", "Email ou senhas inválidos! Pra dúvidas, entre em contato com o suporte")
+        }
+
+    }
+
+
+    return (
+        <main className="main_login">
+            <div className="banner"></div>
             <section className="section_login">
                 <img src={Logo} alt="Logo Event" />
-                    <form action= "" className="form_login">    
-                        <div className="campos_login">
-                    <div className="campo_input">
-                        <input type="username" name="username" placeholder="username"/>                        
+                <form action="" className="form_login" onSubmit={realizarAutenticacao}>
+                    <div className="campos_login">
+                        <div className="campo_input">
+                            <input type="username" name="username" placeholder="username" value={email} onChange={(e) => setEmail(e.target.value)} />
+                        </div>
+                        <div className="campo_input">
+                            <input type="password" name="senha" placeholder="password" value={senha} onChange={(e) => setSenha(e.target.value)} />
+                        </div>
                     </div>
-                    <div className="campo_input">
-                        <input type="password" name="senha" placeholder="password"/>
-                    </div>
-                </div>
-                <a href="">Esqueceu sua senha?</a>
-                <Botao nomeBotao ="Login"/>
-               </form>
+                    <a href="">Esqueceu sua senha?</a>
+                    <Botao nomeBotao="Login" />
+                </form>
             </section>
         </main>
     )

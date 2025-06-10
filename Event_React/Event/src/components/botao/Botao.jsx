@@ -3,7 +3,7 @@ import "./Botao.css"
 
 const Login = (props) => {
     return(
-        <button className="botao">{props.nomeBotao}</button>
+        <button type="submit"  className="botao">{props.nomeBotao}</button>
 
     )
 }

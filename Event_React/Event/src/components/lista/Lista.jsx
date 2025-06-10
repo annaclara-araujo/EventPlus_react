@@ -30,10 +30,9 @@ const Lista = (props) => {
                                 <td data-cell="Nome" style={{ display: props.tiposEvento }}>{props.tipoLista == "TiposEventos" ? item.tituloTipoEvento : item.tituloTipoUsuario ? item.nomeEvento : item.nomeEvento} {item.tituloTipoUsuario} </td>
 
 
-                                <td data-cell="Tipo Evento" style={{ display: props.visibilidade }}>{item.tipoEvento?.tituloTipoEvento} </td>
+                                <td data-cell="Tipo Evento" style={{ display: props.visibilidade }}>{item.tiposEvento?.tituloTipoEvento} </td>
 
                                 {/* <td data-cell="Data Evento" style={{display: props.visibilidade}}>{new Date(item.dataEvento).toLocaleDateString('pt-BR')}</td> */}
-                                <td></td>
 
                                 <td data-cell="Editar">
                                     <img
