@@ -9,6 +9,7 @@ import { userDecodeToken } from "../../auth/Auth";
 import secureLocalStorage from "react-secure-storage";
 
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 
 const Login = () => {
 
@@ -16,6 +17,8 @@ const Login = () => {
     const [senha, setSenha] = useState("")
 
     const navigate = useNavigate()
+
+    const {setUsuario} = useAuth();
 
     function alertar(icone, mensagem) {
         const Toast = Swal.mixin({
@@ -53,11 +56,15 @@ const Login = () => {
                     const tokenDecodificado = userDecodeToken(token)
 
                     //console.log("Token decodificado");
-                    console.log(tokenDecodificado);
+                    console.log(tokenDecodificado)
+
+                    setUsuario(tokenDecodificado)
+
+
 
                     secureLocalStorage.setItem("tokenLogin", JSON.stringify(tokenDecodificado))
 
-                    if (tokenDecodificado.tipoUsuario === "aluno") {
+                    if (tokenDecodificado.tipoUsuario === "comum") {
                         navigate("/ListaEvento")
                     } else {
                         navigate("/Evento")

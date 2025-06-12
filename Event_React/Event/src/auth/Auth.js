@@ -9,14 +9,4 @@ export const userDecodeToken = (token) => {
         tipoUsuario: decodificado["Tipo do usuário"]
     }
 
-
-
-
-
-
-
-
-
-
-
 }

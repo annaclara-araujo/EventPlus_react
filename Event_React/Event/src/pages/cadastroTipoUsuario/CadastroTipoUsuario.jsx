@@ -162,6 +162,7 @@ const CadastroTipoUsuario = () => {
                     titulocoluna="Titulo"
                     //titulo = "Tipo Evento"
                     //titulo1 = "Tipo Usuario"
+                    visibilidade2="none"
 
                     lista={listaTipoUsuario}
                     tipoLista="TiposUsuarios"

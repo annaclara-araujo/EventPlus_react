@@ -56,8 +56,8 @@ const Cadastro = (props) => {
 
 
                 <div className="descricao">
-                  <textarea name="" id="" style={{ display: props.visibilidade }}
-                    value={props.valorInputDescricao}
+                  <textarea name="" id="" 
+                    value={props.valorInputDescricao} style={{ display: props.visibilidadeDes }}
                     onChange={(e) => props.setValorInputDescricao(e.target.value)}>
                   </textarea>
                 </div>

@@ -11,11 +11,11 @@ const CadastroEvento = () => {
     const [evento, setEvento] = useState("");
     const [dataEvento, setDataEvento] = useState("");
     const [descricao, setDescricao] = useState("");
-    const [instituicao, setInstituicao] = useState("5C0B4A4B-1EA5-401E-866D-9E6DACD156F0");
+    const [instituicao, setInstituicao] = useState("BEED04DB-A1B7-421C-A12A-18ED2755F13D");
     const [tipoEvento, setTipoEvento] = useState("");
     const [listaTipoEvento, setListaTipoEvento] = useState([])
     const [listaEvento, setListaEvento] = useState([])
-
+    const [excluirEvento, setExcluirEvento] = useState([])
 
 
     function alertar(icone, mensagem) {
@@ -98,37 +98,22 @@ const CadastroEvento = () => {
             listarEvento();
 
         } catch (error) {
-            console.log("Erro ao atualizar evento:", error);
+            console.log("Erro ao atualizar evento:", "error");
             Swal.fire("Erro!", "Não foi possível atualizar.", "error");
         }
     }
-    async function mostrarDescricao() {
-       Swal.fire({
-            title: "<strong>HTML <u>example</u></strong>",
-            icon: "info",
-            html: `
-            You can use <b>bold text</b>,
-            <a href="#" autofocus>links</a>,
-            and other HTML tags
-            `,
-            showCloseButton: true,
-            showCancelButton: true,
-            focusConfirm: false,
-            confirmButtonText: `
-             <i class="fa fa-thumbs-up"></i> Great!
-             `,
-            confirmButtonAriaLabel: "Thumbs up, great!",
-            cancelButtonText: `
-            <i class="fa fa-thumbs-down"></i>
-             `,
-            cancelButtonAriaLabel: "Thumbs down"
+    async function mostrarDescricao(item) {
+        Swal.fire({
+            title: 'Descrição do Evento',
+            text: item.descricao || "Nenhuma descrição disponível",
+            icon: 'info',
+            confirmButtonText: 'Fechar'
         });
     }
 
-
     async function listarEvento() {
         try {
-            const resposta = await api.get("eventos")
+            const resposta = await api.get("Eventos")
             setListaEvento(resposta.data)
         } catch (error) {
             console.log(error);
@@ -137,55 +122,33 @@ const CadastroEvento = () => {
     }
 
     async function deletarEvento(id) {
-
-        Swal.fire({
-            title: 'Tem certeza?',
-            text: "Você não poderá desfazer esta ação!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#b51d44',
-            cancelButtonColor: '#b5b5b5',
-            confirmButtonText: 'Sim, apagar!',
-            cancelButtonText: 'Cancelar',
-        }).then((result) => {
-            if (result.isConfirmed) {
-                api.delete(`eventos/${id.idEvento}`);
-                alertar("success", "Gênero Excluido!")
-            }
-        }).catch(error => {
-            console.log(error);
-            alertar("error", "Erro ao Excluir!");
-        });
+        try {
+            const excluirEvento = await api.delete(`Eventos/${id.idEvento}`)
+            setExcluirEvento(excluirEvento.data)
+            alertar("success", "deletado com sucesso!");
+        }
+        catch (error) {
+            alertar("error", "Erro ao deletar")
+        }
     }
-
     async function cadastrarEvento(evt) {
         evt.preventDefault();
-
         if (evento.trim() !== "") {
             try {
-                await api.post("eventos", { nomeEvento: evento, dataEvento: dataEvento, descricao: descricao, idTipoEvento: tipoEvento, idInstituicao: instituicao })
-                alertar("success", "Sucesso! Cadastro realizado com sucesso!");
-
-                setEvento("")
-                setDataEvento()
-                setTipoEvento("")
-                setDescricao("")
-                setInstituicao("")
+                await api.post("Eventos", { nomeEvento: evento, idTipoEvento: tipoEvento, dataEvento: dataEvento, descricao: descricao, idInstituicao: instituicao });
+                alertar("success", "Deu certo");
+                setEvento("");
+                setDataEvento("");
+                setDescricao("");
+                setTipoEvento("");
+                listarEvento();
 
             } catch (error) {
-                alertar("error", "Erro! Entre em contato com o suporte!")
-                console.log(error);
-
-                // console.log({
-                //     DataEvento: data,
-                //     NomeEvento: evento,
-                //     Descricao: descricao,
-                //     IdTipoEvento: tipoEvento,
-                //     IdInstituicao: instituicoes
-                // });
+                alertar("error", "Entre em contato com o suporte")
             }
         } else {
-            alertar("error", "Erro! Preencha os campos")
+            alertar("error", "Preencha o campo vazio")
+
         }
     }
 
@@ -243,11 +206,11 @@ const CadastroEvento = () => {
                     lista={listaEvento}
                     tipoLista="Evento"
 
-    
+
                     funcExcluir={deletarEvento}
                     funcEditar={editarTipoEvento}
                     funcDescricao={mostrarDescricao}
-                    
+
 
 
                 />
